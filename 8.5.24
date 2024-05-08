@@ -1,0 +1,47 @@
+import os
+import datetime
+
+def clear_screen():
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+
+def add_food():
+    clear_screen()
+    food_name = input("Enter the name of the food: ")
+    quantity = input("Enter the quantity (e.g., cups, grams, etc.): ")
+    date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open("pet_food.txt", "a") as file:
+        file.write(f"\n\n{date}\nFood: {food_name}\nQuantity: {quantity}")
+
+def view_food_entries():
+    clear_screen()
+    try:
+        with open("pet_food.txt", "r") as file:
+            entries = file.read()
+            print(entries)
+    except FileNotFoundError:
+        print("No food entries found.")
+
+def main():
+    while True:
+        print("\n=== Pet's Food Tracker ===")
+        print("1. Add a food item")
+        print("2. View past food entries")
+        print("3. Exit")
+        
+        choice = input("Enter your choice (1/2/3): ")
+        
+        if choice == '1':
+            add_food()
+        elif choice == '2':
+            view_food_entries()
+        elif choice == '3':
+            print("Exiting the pet's food tracker. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please enter 1, 2, or 3.")
+
+if __name__ == "__main__":
+    main()
